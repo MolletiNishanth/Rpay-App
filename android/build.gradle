@@ -1,0 +1,50 @@
+buildscript {
+    ext.kotlin_version = '1.5.10'
+
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:4.2.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+// FOR ID SDK INTEGRATION, CODE STARTS HERE 
+// buildscript {
+//   ext.id_sdk_version = '2.0.0'
+// }
+
+// repositories {
+//   maven { url 'https://artifactory.rakuten-it.com/membership-mvn-release/' }
+// }
+
+// dependencies {
+//   // Core library
+//   implementation "r10.one.auth:core:$id_sdk_version"
+//   // Google SafetyNet assertions, required in production
+//   implementation "r10.one.auth:safetynet-assertions:$id_sdk_version"
+//   // Compatibility with previous REM SDK sessions
+//   implementation "r10.one.auth:rem:$id_sdk_version"
+// }
+// FOR ID SDK INTEGRATION , CODE ENDS HERE
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+rootProject.buildDir = '../build'
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
+subprojects {
+    project.evaluationDependsOn(':app')
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
